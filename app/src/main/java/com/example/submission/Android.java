@@ -11,6 +11,8 @@ public class Android {
         this.name = name;
     }
 
+    private String detail;
+
     public String getDetail() {
         return detail;
     }
@@ -19,6 +21,8 @@ public class Android {
         this.detail = detail;
     }
 
+    private int image;
+
     public int getImage() {
         return image;
     }
@@ -26,7 +30,4 @@ public class Android {
     public void setImage(int image) {
         this.image = image;
     }
-
-    private String detail;
-    private int image;
 }

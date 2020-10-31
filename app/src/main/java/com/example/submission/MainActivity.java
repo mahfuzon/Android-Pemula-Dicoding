@@ -35,6 +35,21 @@ public class MainActivity extends AppCompatActivity {
         rvAndroid.setLayoutManager(new LinearLayoutManager(this));
         ListAndroidAdapter listAndroidAdapter = new ListAndroidAdapter(list);
         rvAndroid.setAdapter(listAndroidAdapter);
+
+        listAndroidAdapter.setOnItemClickCallback(new ListAndroidAdapter.OnItemClickCallback() {
+            @Override
+            public void onItemClicked(Android data) {
+                showSelectedAndroid(data);
+            }
+        });
+    }
+
+    private void showSelectedAndroid(Android android) {
+        Intent moveIntentWithData = new Intent(MainActivity.this, MoveWithDataActivity.class);
+        moveIntentWithData.putExtra(MoveWithDataActivity.EXTRA_NAME, android.getName());
+        moveIntentWithData.putExtra(MoveWithDataActivity.EXTRA_IMAGE, android.getImage());
+        moveIntentWithData.putExtra(MoveWithDataActivity.EXTRA_DETAIL, android.getDetail());
+        startActivity(moveIntentWithData);
     }
 
     @Override

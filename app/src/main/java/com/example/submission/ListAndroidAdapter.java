@@ -15,6 +15,10 @@ import com.bumptech.glide.request.RequestOptions;
 import java.util.ArrayList;
 
 public class ListAndroidAdapter extends RecyclerView.Adapter<ListAndroidAdapter.ListViewHolder> {
+    private OnItemClickCallback onItemClickCallback;
+    public void setOnItemClickCallback(OnItemClickCallback onItemClickCallback){
+        this.onItemClickCallback = onItemClickCallback;
+    }
     private ArrayList<Android> listAndroid;
     public ListAndroidAdapter(ArrayList<Android> list){
         this.listAndroid = list;
@@ -27,11 +31,17 @@ public class ListAndroidAdapter extends RecyclerView.Adapter<ListAndroidAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ListViewHolder holder, int position) {
         Android android = listAndroid.get(position);
         Glide.with(holder.itemView.getContext()).load(android.getImage()).apply(new RequestOptions().override(55,55)).into(holder.imgPhoto);
         holder.tvName.setText(android.getName());
         holder.tvDetail.setText(android.getDetail());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onItemClickCallback.onItemClicked(listAndroid.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -48,5 +58,9 @@ public class ListAndroidAdapter extends RecyclerView.Adapter<ListAndroidAdapter.
             tvName = itemView.findViewById(R.id.tv_android_name);
             tvDetail = itemView.findViewById(R.id.tv_android_detail);
         }
+    }
+
+    public interface OnItemClickCallback{
+        void onItemClicked(Android data);
     }
 }
